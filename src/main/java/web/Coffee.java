@@ -5,7 +5,10 @@ import javax.persistence.*;
 @Table(name="coffee")
 public class Coffee {
 	@Id long id;
-	public String name;
-	public char size;
-	public double price;
+	String name;
+	char size;
+	double price;
+	public String getName()  { return name;  }
+	public char   getSize()  { return size;  }
+	public double getPrice() { return price; }
 }

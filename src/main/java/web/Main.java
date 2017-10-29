@@ -1,5 +1,6 @@
 package web;
 
+import java.util.*;
 import org.springframework.ui.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
@@ -7,27 +8,24 @@ import org.springframework.beans.factory.annotation.*;
 
 import org.hibernate.*;
 import org.hibernate.query.Query;
-import java.util.*;
 
 @Controller
 class Main {
 
 	@RequestMapping("/")
-	String welcome(Model model) {
-		model.addAttribute("user", "Mark Zuckerberg");
-		return "index";
+	String welcome() {
+		return "index.jsp";
 	}
 	
-	@RequestMapping("/show") @ResponseBody
-	String show() {
-		Session s = factory.openSession();
-		Query q = s.createQuery("from Coffee c");
-		List list =  q.list();
-		Coffee latte = (Coffee)list.get(0);
-		return latte.name;
+	@RequestMapping("/show")
+	String show(Model model) {
+		Session session = factory.openSession();
+		Query query = session.createQuery("from Coffee c");
+		List list = query.list();
+		model.addAttribute("coffee", list);
+		return "show.jsp";
 	}
 	
 	@Autowired
 	SessionFactory factory;
-
 }
